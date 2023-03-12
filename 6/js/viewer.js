@@ -7,13 +7,6 @@ const commentsList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('.social__comment');
 const commentsFragment = document.createDocumentFragment();
 
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closePictureModal();
-  }
-};
-
 const setPicture = ({url, description, likes, comments}) => {
   pictureModalElement.querySelector('.big-picture__img > img').src = url;
   pictureModalElement.querySelector('.social__caption').textContent = description;
@@ -42,7 +35,7 @@ const setComments = (comments) => {
   commentsList.appendChild(commentsFragment);
 };
 
-function openPictureModal (picture) {
+const openPictureModal = (picture) => {
   pictureModalElement.classList.remove('hidden');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
@@ -52,9 +45,9 @@ function openPictureModal (picture) {
   setComments(picture.comments);
 
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
-function closePictureModal () {
+const closePictureModal = () => {
   pictureModalElement.classList.add('hidden');
   socialCommentCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
@@ -63,6 +56,13 @@ function closePictureModal () {
   clearComments();
 
   document.removeEventListener('keydown', onDocumentKeydown);
+};
+
+function onDocumentKeydown (evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePictureModal();
+  }
 }
 
 export {
